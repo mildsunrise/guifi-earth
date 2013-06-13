@@ -1,0 +1,29 @@
+{ "name": "guifi-earth"
+, "version": "0.0.1"
+, "private": true
+
+, "keywords": ["guifi", "earth", "kml", "network", "geographic"]
+, "description": "See a representation of the Guifi.net network in Google Earth."
+, "homepage": "https://github.com/jmendeth/guifi-earth"
+
+, "licenses": [ { "type": "BSD", "url": "http://opensource.org/licenses/BSD-2-Clause" }
+              ]
+
+, "author": "Xavier Mendez <jmendeth@gmail.com> (http://jmendeth.com)"
+, "contributors": [ "Xavier Mendez <jmendeth@gmail.com>"
+                  ]
+, "maintainers": [ "Xavier Mendez <jmendeth@gmail.com>"
+                 ]
+
+, "engines": { "node": ">= 0.8.0" }
+, "dependencies": { "coffee-script": ">= 0.0.1"
+                  , "jade": ">= 0.0.1"
+                  , "q": ">= 0.0.1"
+                  , "xml2js": ">= 0.0.1"
+                  }
+, "bin": "compile.coffee"
+
+, "repository": { "type": "git"
+                , "url": "https://github.com/jmendeth/guifi-earth.git" }
+, "bugs": { "url": "https://github.com/jmendeth/guifi-earth/issues" }
+}
