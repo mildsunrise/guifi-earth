@@ -13,7 +13,7 @@ writeFile = Q.denodeify fs.writeFile
 
 # Some variables
 VIEW = "model.jade"
-DEBUG = false
+DEBUG = true
 PRETTY = false
 
 # The actual work
@@ -42,9 +42,9 @@ buildKml = (nodes, links) -> Q
       # produce output
       console.error "Processing..."
       view cnml: nodes.cnml
-      , ldoc: links
-      , network: nodes.cnml.network[0]
-      , world: nodes.cnml.network[0].zone[0]
+         , ldoc: links
+         , net: nodes.cnml.network[0]
+         , world: nodes.cnml.network[0].zone[0]
 
 # Compile the view
 compileView = (file) -> Q
@@ -57,6 +57,8 @@ compileView = (file) -> Q
       debug: DEBUG
       compileDebug: DEBUG
       pretty: PRETTY
+      locals: api: earthApi
+
 
 # Parse arguments
 if argv.length != 4
@@ -83,3 +85,21 @@ Q
     process.stdout.write output
 
 .done()
+
+
+# The API which is made available to the template
+earthApi =
+   # convert 'regular' color to Google Earth
+   col: (col, a) ->
+     if col[0] is '#'
+        col = col.substr 1
+     unless a? then a=1
+       a = (a*255).toString 16
+     if a.length is 1
+       a = '0'+a
+     r = col.substr 0,2
+     g = col.substr 2,4
+     b = col.substr 4,6
+     "#"+a+b+g+r
+
+
