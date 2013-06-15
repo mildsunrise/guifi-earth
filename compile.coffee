@@ -13,8 +13,8 @@ writeFile = Q.denodeify fs.writeFile
 
 # Some variables
 VIEW = "model.jade"
-DEBUG = true
-PRETTY = false
+DEBUG =  on
+PRETTY = on
 
 # The actual work
 buildKml = (nodes, links) -> Q
@@ -34,6 +34,21 @@ buildKml = (nodes, links) -> Q
       throw new Error "Everything should be inside the root zone."
     if nodes.cnml.network[0].zone[0].$.title != "guifi.net World"
       throw new Error "The CNML needs to be from the root zone."
+    
+    nodesHash = {}
+    # TODO: scan and set to nodes
+    
+    linksTo = (node) ->
+      id = node.$.id
+      ret = []
+      for link in links["ogr:FeatureCollection"]["gml:featureMember"]
+        link = link.dlinks[0]
+        if link.NODE1_ID[0] is id
+          ret.push link.NODE2_ID[0]
+        if link.NODE2_ID[0] is id
+          ret.push link.NODE1_ID[0]
+      ret
+      
 
     # compile the view
     compileView(VIEW)
@@ -45,6 +60,7 @@ buildKml = (nodes, links) -> Q
          , ldoc: links
          , net: nodes.cnml.network[0]
          , world: nodes.cnml.network[0].zone[0]
+         , api: earthApi
 
 # Compile the view
 compileView = (file) -> Q
@@ -54,15 +70,14 @@ compileView = (file) -> Q
   .then (view) ->
     jade.compile view,
       filename: file
-      debug: DEBUG
+      #debug: DEBUG
       compileDebug: DEBUG
       pretty: PRETTY
-      locals: api: earthApi
 
 
 # Parse arguments
 if argv.length != 4
-  console.error "Usage: ./#{path.basename module.filename} [nodes cnml] [links gml]"
+  console.error "Usage: ./#{path.basename module.filename} [nodes cnml] [links gml] > guifi.kml"
   process.exit 1
 
 [nodes, links] = argv.slice 2
@@ -94,12 +109,12 @@ earthApi =
      if col[0] is '#'
         col = col.substr 1
      unless a? then a=1
-       a = (a*255).toString 16
+     a = (a*255).toString 16
      if a.length is 1
        a = '0'+a
      r = col.substr 0,2
-     g = col.substr 2,4
-     b = col.substr 4,6
+     g = col.substr 2,2
+     b = col.substr 4,2
      "#"+a+b+g+r
 
 
