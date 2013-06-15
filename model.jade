@@ -1,0 +1,145 @@
+//- The template used to produce KML.
+//- The actual content is at the end.
+
+mixin dumpChildren(zoneData)
+  // zones first
+  if "zone" in zoneData
+    each zone in zoneData.zone
+      mixin zone(zone)
+  
+  // then sort nodes
+  - var supernodes = [], nodes = [];
+  if "node" in zoneData
+    each node in zoneData.node
+      // FIXME
+      if node.$.links > 1 || node.$.devices > 1
+        - supernodes.push(node);
+      else
+        - nodes.push(node);
+  - supernodes = supernodes.sort();
+  - nodes = nodes.sort();
+  
+  // dump supernodes first
+  each node in supernodes
+    mixin node(node, true)
+  
+  // then other nodes
+  each node in nodes
+    mixin node(node, false)
+
+
+//- Code for a ZONE
+mixin zone(zone)
+  Folder(id="guifi-#{zone.$.id}")
+    name= zone.$.title
+    Snippet
+    description.
+      <![CDATA[<p>
+        <a href="http://guifi.net/node/#{zone.$.id}">Zone #{zone.$.id} at guifi.net</a>
+      </p>]]>
+      #{zone._}
+
+    styleUri #guifiZoneStyle
+    
+    Region
+      LatLonAltBox
+        - var box = zone.$.box.split(',');
+        west=  box[0]
+        south= box[1]
+        east=  box[2]
+        north= box[3]
+      Lod: minLodPixels 300
+    
+    mixin dumpChildren(zone)
+
+
+//- Code for a NODE
+mixin node(node, supernode)
+  Placemark(id="guifi-#{node.$.id}")
+    name= node.$.title
+    Snippet
+    description.
+      <![CDATA[<p>
+        <a href="http://guifi.net/node/#{node.$.id}">Node #{node.$.id} at guifi.net</a>
+      </p>]]>
+      #{node._}
+    
+    - var alt = node.$.antenna_elevation;
+    - var lon = node.$.lon, lat = node.$.lat; //FIXME: try to remove semicolons
+    
+    Style
+      - var color, mode;
+      case node.$.status
+        when "Planned": - color = 'ltblu'
+        when "Building": - color = 'pink'
+        when "Testing": - color = 'ylw'
+        when "Working": - color = 'grn'
+        
+        when "Reserved": - color = 'wht'
+        when "Dropped":  - color = 'wht'
+      
+      if supernode
+        - mode = 'stars'
+      else
+        - mode = 'blank'
+
+      IconStyle
+        if supernode
+          scale 1.3
+        else
+          scale 0.5
+
+        Icon: href http://maps.google.com/mapfiles/kml/paddle/#{color}-#{mode}.png
+      
+      LabelStyle
+        if supernode
+          scale 1.2
+        else
+          scale 0.75
+      
+      ListStyle
+        ItemIcon: href http://maps.google.com/mapfiles/kml/paddle/#{color}-#{mode}-lv.png
+        
+    
+    Point
+      coordinates #{lon},#{lat},#{alt}
+      extrude 1
+      altitudeMode relativeToGround
+    
+    //- TODO dump links too
+
+
+
+!!! xml
+kml(xmlns="http://www.opengis.net/kml/2.2")
+  
+  // The root zone, slightly different from
+  // the other zones. Note we do *not* show
+  // that within a Region.
+  
+  Folder#guifi-world
+    name= world.$.title
+    Snippet
+    description.
+      <![CDATA[<p>
+        <a href="http://guifi.net/guifi_zones">guifi.net root zone</a>
+      </p>]]>
+      #{world._}
+    
+    styleUri #guifiWorldStyle
+    visibility 0
+    
+    // let the fun start!
+    mixin dumpChildren(world)
+  
+  
+  // Some styles
+
+  Style#guifiWorldStyle
+    ListStyle
+      listItemType checkOffOnly
+      ItemIcon: href world.png
+  
+  Style#guifiZoneStyle
+    // just in case we wanna add something later
+
