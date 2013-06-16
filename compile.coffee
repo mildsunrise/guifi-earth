@@ -25,7 +25,7 @@ buildKml = (nodes, links) -> Q
 
   .spread (nodes, links) ->
     # validate input
-    console.error "Perparing to process..."
+    console.error "Preprocessing data..."
     if nodes.cnml.class[0].$.network_description != "nodes"
       throw new Error "The CNML should be at «node» level."
     if nodes.cnml.network[0].zone.length != 1
@@ -35,32 +35,48 @@ buildKml = (nodes, links) -> Q
     if nodes.cnml.network[0].zone[0].$.title != "guifi.net World"
       throw new Error "The CNML needs to be from the root zone."
     
+    # determine root hashes
+    cnml = nodes.cnml
+    network = cnml.network[0]
+    world = network.zone[0]
+    
+    # index every node
     nodesHash = {}
-    # TODO: scan and set to nodes
+    indexZone = (zone) ->
+      if zone.zone?
+        for czone in zone.zone
+          indexZone czone
+      if zone.node?
+        for cnode in zone.node
+          nodesHash[cnode.$.id] = cnode
+    indexZone world
     
     linksTo = (node) ->
       id = node.$.id
       ret = []
+      pushLink = (link, id) ->
+        ret.push
+          type: link.LINK_TYPE[0]
+          status: link.STATUS[0]
+          node: nodesHash[id[0]]
       for link in links["ogr:FeatureCollection"]["gml:featureMember"]
         link = link.dlinks[0]
         if link.NODE1_ID[0] is id
-          ret.push link.NODE2_ID[0]
+          pushLink link.NODE2_ID
         if link.NODE2_ID[0] is id
-          ret.push link.NODE1_ID[0]
+          pushLink link.NODE1_ID
       ret
-      
 
     # compile the view
+    console.error "Preparing conversion..."
     compileView(VIEW)
 
     .then (view) ->
       # produce output
-      console.error "Processing..."
-      view cnml: nodes.cnml
-         , ldoc: links
-         , net: nodes.cnml.network[0]
-         , world: nodes.cnml.network[0].zone[0]
-         , api: earthApi
+      console.error "Converting..."
+      view cnml: cnml
+         , net: network, world: world
+         , api: earthApi, linksTo: linksTo
 
 # Compile the view
 compileView = (file) -> Q
@@ -96,7 +112,7 @@ Q
 
   .then (output) ->
     # print to stdout
-    console.error "Done processing."
+    console.error "Conversion done."
     process.stdout.write output
 
 .done()
