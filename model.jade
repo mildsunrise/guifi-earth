@@ -1,33 +1,6 @@
 //- The template used to produce KML.
 //- The actual content is at the end.
 
-mixin dumpChildren(zoneData)
-  // zones first
-  if "zone" in zoneData
-    each zone in zoneData.zone
-      mixin zone(zone)
-  
-  // then sort nodes
-  - var supernodes = [], nodes = [];
-  if "node" in zoneData
-    each node in zoneData.node
-      // FIXME
-      if node.$.links > 1 || node.$.devices > 1
-        - supernodes.push(node);
-      else
-        - nodes.push(node);
-  - supernodes = supernodes.sort();
-  - nodes = nodes.sort();
-  
-  // dump supernodes first
-  each node in supernodes
-    mixin node(node, true)
-  
-  // then other nodes
-  each node in nodes
-    mixin node(node, false)
-
-
 //- Code for a ZONE
 mixin zone(zone)
   Folder(id="guifi-#{zone.$.id}")
@@ -110,6 +83,32 @@ mixin node(node, supernode)
 
 
 
+mixin dumpChildren(zoneData)
+  // zones first
+  if "zone" in zoneData
+    each zone in zoneData.zone
+      mixin zone(zone)
+  
+  // then group nodes
+  - var supernodes = {}, nodes = {};
+  if "node" in zoneData
+    each node in zoneData.node
+      // FIXME: need a more precise way
+      if node.$.links > 1 || node.$.devices > 1
+        - supernodes[node.$.title] = node;
+      else
+        - nodes[node.$.title] = node;
+  
+  // dump supernodes first, ordered by name
+  each name in Object.keys(supernodes).sort()
+    mixin node(supernodes[name], true)
+  
+  // then other nodes, ordered by name
+  each name in Object.keys(nodes).sort()
+    mixin node(nodes[name], false)
+
+
+
 !!! xml
 kml(xmlns="http://www.opengis.net/kml/2.2")
   
@@ -132,8 +131,6 @@ kml(xmlns="http://www.opengis.net/kml/2.2")
     // let the fun start!
     mixin dumpChildren(world)
   
-  
-  // Some styles
 
   Style#guifiWorldStyle
     ListStyle
