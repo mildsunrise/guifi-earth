@@ -6,8 +6,13 @@ Markup Language][kml], for viewing in [Google Earth](google-earth), [Google
 Maps][google-maps] or any other KML-capable program. You can customize it
 easily, see the [Tweaking](#tweaking) section.
 
+To try it, you can download a standard, pre-built KML file from the
+[downloads page][downloads] and open it in Google Earth.
 
-## Usage
+//TODO: screenshots, fix download link
+
+
+## Setting up
 
 You need to have [Node.JS][node] installed. Then, clone the repo and do:
 
@@ -15,8 +20,18 @@ You need to have [Node.JS][node] installed. Then, clone the repo and do:
 $ npm install
 ```
 
-This will install any dependencies for you. It only needs to be done once.  
-Then, you need to download the following input data:
+This will install any dependencies for you.
+
+
+## Usage
+
+#### Parsing
+
+> You can download `data.pak` from the [downloads page][downloads] and
+> skip to [the next section](#converting). (there's no guarantee that
+> the data will be up-to-date, however)
+
+First, you need to download the following input data:
 
   - CNML export of the "World" zone, at the "Zones and Nodes" level:
     http://guifi.net/guifi/cnml/3671/nodes
@@ -24,14 +39,28 @@ Then, you need to download the following input data:
   - GML export of the "World" zone, of the links:
     http://guifi.net/guifi/gml/3671/links
 
-Now to produce the KML:
+Now you can parse those two files into an efficient MSGPack archive:
 
 ```bash
-$ ./compile.coffee nodes.cnml links.gml > guifi.kml
+# Replace `nodes.cnml` and `links.gml` with the files you downloaded
+$ ./compile.coffee nodes.cnml links.gml > data.pak
 ```
 
-Replace `nodes.cnml` and `links.gml` with the files you downloaded before.
+Now you can remove the original XML files, they are no longer needed.
+
+#### Converting
+
+To produce the final KML, just do:
+
+```bash
+# Adjust `data.pak` if you have downloaded it somewhere else.
+$ ./compile.coffee data.pak > guifi.kml
+```
+
 The output will be stored in `guifi.kml`. Just open it in Google Earth.
+
+**Tip:** you may want to keep or distribute `data.pak` to experiment with
+your own KMLs. Keep reading.
 
 
 ## Tweaking
@@ -49,16 +78,14 @@ it too. :)
 
 ## Implementation
 
-This is very **uneffective** at processing data, because it doesn't do
-incremental processing. First, it loads all the data (~12MB) in memory and
-parses it using [xml2js][xml2js]. Then, it's passed through a [Jade][jade] view
-that produces the XML (buffered) and, finally, writes that to stdout.
-
-guifi-earth was designed to be very **simple**, and **easy to understand and
-tweak** (thanks to the Jade syntax). It wasn't designed to be lightweight, fast
-nor effective.
+The two-step process is done to keep the processing operation fast, so you
+can hack on the template and see your changes quickly. It also makes it easier
+for others to build their own KML; just give them the `data.pak` which is a lot
+smaller than its respective XML files.
 
 
+
+downloads: sdfdsfdas "Downloads of this project"
 
 kml: https://developers.google.com/kml/documentation "KML documentation"
 google-earth: http://earth.google.com "Google Earth"
