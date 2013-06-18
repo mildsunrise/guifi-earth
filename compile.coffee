@@ -92,24 +92,23 @@ buildKml = (data) ->
     if zone.node?
       for cnode in zone.node
         nodesHash[cnode.$.id] = cnode
+        cnode.links = []
   indexZone world
   
-  linksTo = (node) ->
-    id = node.$.id
-    ret = []
-    pushLink = (link, id) ->
-      ret.push
-        type: link.LINK_TYPE[0]
-        status: link.STATUS[0]
-        node: nodesHash[id[0]]
-        distance: link.KMS[0]
-    for link in links["ogr:FeatureCollection"]["gml:featureMember"]
-      link = link.dlinks[0]
-      if link.NODE1_ID[0] is id
-        pushLink link.NODE2_ID
-      if link.NODE2_ID[0] is id
-        pushLink link.NODE1_ID
-    ret
+  # index every link twice
+  pushLink = (link, from, to) ->
+    from.links.push
+      type: link.LINK_TYPE[0]
+      status: link.STATUS[0]
+      node: to
+      distance: link.KMS[0]
+  for link in links["ogr:FeatureCollection"]["gml:featureMember"]
+    link = link.dlinks[0]
+    n1 = nodesHash[link.NODE1_ID[0]]
+    n2 = nodesHash[link.NODE2_ID[0]]
+    if n1 and n2
+      pushLink link, n1, n2
+      pushLink link, n2, n1
 
   # compile the view
   console.error "Preparing conversion..."
@@ -120,7 +119,7 @@ buildKml = (data) ->
     console.error "Converting..."
     view cnml: cnml
        , net: network, world: world
-       , api: earthApi, linksTo: linksTo
+       , api: earthApi
 
 
 # Parse arguments
