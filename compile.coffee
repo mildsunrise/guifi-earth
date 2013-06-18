@@ -147,17 +147,16 @@ switch argv.length
 # The API which is made available to the template
 
 earthApi =
-   # convert 'regular' color to Google Earth
-   col: (col, a) ->
-     if col[0] is '#'
-        col = col.substr 1
-     unless a? then a=1
-     a = (a*255).toString 16
-     if a.length is 1
-       a = '0'+a
-     r = col.substr 0,2
-     g = col.substr 2,2
-     b = col.substr 4,2
-     a+b+g+r
-
+  # convert 'regular' color to Google Earth
+  col: (col, a) ->
+    if col[0] is '#'
+       col = col.substr 1
+    unless a? then a=1
+    a = (a*255).toString 16
+    if a.length is 1
+      a = '0'+a
+    r = col.substr 0,2
+    g = col.substr 2,2
+    b = col.substr 4,2
+    a+b+g+r
 
