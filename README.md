@@ -2,7 +2,7 @@
 
 guifi-earth is a simple tool which is able to represent the nodes, links and
 zone structure of the [guifi.net](http://guifi.net/en) network in the [Keyhole
-Markup Language][kml], for viewing in [Google Earth](google-earth), [Google
+Markup Language][kml], for viewing in [Google Earth][google-earth], [Google
 Maps][google-maps] or any other KML-capable program. You can customize it
 easily, see the [Tweaking](#tweaking) section.
 
@@ -98,12 +98,12 @@ smaller than its respective XML files.
 
 
 
-downloads: sdfdsfdas "Downloads of this project"
+[downloads]: http://asdfasdfasdfadf "Downloads of this project"
 
-kml: https://developers.google.com/kml/documentation "KML documentation"
-google-earth: http://earth.google.com "Google Earth"
-google-maps:  http://maps.google.com "Google Maps"
+[kml]: https://developers.google.com/kml/documentation "KML documentation"
+[google-earth]: http://earth.google.com "Google Earth"
+[google-maps]:  http://maps.google.com "Google Maps"
 
-node: http://nodejs.org "The Node.JS platform"
-xml2js: https://github.com/Leonidas-from-XIV/node-xml2js "xml2js Node.JS module"
-jade: http://jade-lang.com "The Jade templating engine"
+[node]: http://nodejs.org "The Node.JS platform"
+[xml2js]: https://github.com/Leonidas-from-XIV/node-xml2js "xml2js Node.JS module"
+[jade]: http://jade-lang.com "The Jade templating engine"
