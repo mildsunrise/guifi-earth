@@ -26,7 +26,7 @@ compileView = (file) -> Q
 
 # Some variables
 
-VIEW = "model.jade"
+VIEW = "model/root.jade"
 DEBUG =  on
 PRETTY = on
 

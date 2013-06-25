@@ -1,0 +1,74 @@
+//- Markup to print out a guifi.net ZONE.
+
+mixin zone(data, parent)
+  Folder(id="guifi-#{data.$.id}")
+    name= data.$.title
+    Snippet
+    description.
+      <![CDATA[<p>
+        <a href="http://guifi.net/node/#{data.$.id}">Zone #{data.$.id} at guifi.net</a>.<br/>
+        Child of <a href="#guifi-#{parent.$.id};balloon">#{parent.$.title}</a>.
+      </p><hr/>]]>
+      #{data._}
+
+    styleUri #guifiZoneStyle
+    
+    Region
+      LatLonAltBox
+        - var box = data.$.box.split(',');
+        west=  box[0]
+        south= box[1]
+        east=  box[2]
+        north= box[3]
+      Lod
+        minLodPixels 300
+        minFadeExtent 110
+    
+    mixin dumpChildren(data)
+
+
+
+include node
+include links
+
+//- The logic to print the contents of a zone.
+mixin dumpChildren(zoneData)
+  // zones first
+  if "zone" in zoneData
+    each zone in zoneData.zone
+      mixin zone(zone, zoneData)
+  
+  // then group nodes
+  - var supernodes = {}, nodes = {};
+  if "node" in zoneData
+    each node in zoneData.node
+      // FIXME: find a more precise way
+      if node.links.length > 1 || node.$.devices > 1
+        - supernodes[node.$.title] = node;
+      else
+        - nodes[node.$.title] = node;
+  - var supernames = Object.keys(supernodes).sort();
+  - var names      = Object.keys(nodes).sort();
+  
+  // dump supernodes first, ordered by name
+  each name in supernames
+    mixin node(supernodes[name], true, zoneData)
+  
+  // then other nodes, ordered by name
+  each name in names
+    mixin node(nodes[name], false, zoneData)
+  
+  // lastly, dump links for supernodes
+  if supernames.length
+    Folder(id="guifi-#{zoneData.$.id}-links")
+      name Links
+      Snippet
+      description.
+        <![CDATA[<p>
+          Links for the <a href="#guifi-#{zoneData.$.id};balloon">#{zoneData.$.title}</a> zone.
+        </p>]]>
+      styleUri #guifiLinksFolderStyle
+      each name in supernames
+        if supernodes[name].links
+          mixin links(supernodes[name])
+

@@ -1,0 +1,80 @@
+//- Markup to print out a guifi.net NODE.
+
+mixin node(data, supernode, parent)
+  Placemark(id="guifi-#{data.$.id}")
+    name= data.$.title
+    Snippet
+    description
+      | <![CDATA[<p>
+      |   <a href="http://guifi.net/node/#{data.$.id}">Zone #{data.$.id} at guifi.net</a>.<br/>
+      |   Child of <a href="#guifi-#{parent.$.id};balloon">#{parent.$.title}</a>.
+      
+      // describe links of the node
+      if supernode
+        if data.links
+          | <br/><a href="#guifi-#{data.$.id}-links;balloon">#{data.links.length} link#{data.links.length==1?'':'s'}</a>.
+        else
+          | <br/>No links yet.
+      else
+        each link in data.links
+          - var dest = link.node;
+          | <br/>Connected to <a href="#guifi-#{dest.$.id};flyto">#{dest.$.title}</a>.
+        unless data.links.length
+          | <br/>Not connected to any supernode.
+      
+      // describe devices of the node
+      if data.$.devices > 0
+        | <br/>#{data.$.devices} device#{data.$.devices==1?'':'s'}.
+      else
+        | <br/>No devices.
+      
+      | </p><hr/>]]>
+      = data._
+    
+    //- the node's appearence
+    Style
+      - var color, mode;
+      
+      //- decide the color depending on the node's status
+      case data.$.status
+        when "Planned": - color = 'ltblu' //- cian
+        when "Building": - color = 'pink' //- pink
+        when "Testing": - color = 'ylw'   //- yellow
+        when "Working": - color = 'grn'   //- green
+        
+        when "Reserved": - color = 'wht'  //- white
+        when "Dropped":  - color = 'wht'  //- white
+      
+      //- let supernodes have a star in the icon
+      if supernode
+        - mode = 'stars' //- FIXME: remove other semicolons
+      else
+        - mode = 'blank'
+
+      IconStyle
+        if supernode
+          scale 1.3
+        else
+          scale 0.5
+
+        Icon: href http://maps.google.com/mapfiles/kml/paddle/#{color}-#{mode}.png
+        hotSpot(x=32, y=1, xunits="pixels", yunits="pixels")
+      
+      LabelStyle
+        if supernode
+          scale 1.2
+        else
+          scale 0.75
+      
+      ListStyle
+        ItemIcon: href http://maps.google.com/mapfiles/kml/paddle/#{color}-#{mode}-lv.png
+      
+      LineStyle
+        width 4
+    
+    //- the actual geometry
+    Point
+      coordinates #{data.$.lon},#{data.$.lat},#{data.$.antenna_elevation}
+      extrude 1
+      altitudeMode relativeToGround
+

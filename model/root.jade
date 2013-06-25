@@ -1,0 +1,41 @@
+//- The main view, which prints out the World zone
+//- and lists some shared styles.
+
+!!! xml
+kml(xmlns="http://www.opengis.net/kml/2.2")
+  
+  // The root zone, slightly different from
+  // the other zones. Note we do *not* show
+  // that within a Region.
+  
+  Folder#guifi-world
+    name= world.$.title
+    Snippet
+    description.
+      <![CDATA[<p>
+        <a href="http://guifi.net/guifi_zones">guifi.net root zone</a>.
+      </p>]]>
+      #{world._}
+    
+    styleUri #guifiWorldStyle
+    visibility 0
+    
+    //- let the fun start!
+    include zone
+    mixin dumpChildren(world)
+  
+
+  Style#guifiWorldStyle
+    ListStyle
+      listItemType checkOffOnly //FIXME
+      ItemIcon: href world.png
+  
+  Style#guifiZoneStyle
+    // just in case we wanna add something later
+  
+  Style#guifiZoneLinksStyle
+    // just in case we wanna add something later
+  
+  Style#guifiNodeLinksStyle
+    // just in case we wanna add something later
+

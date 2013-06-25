@@ -1,0 +1,70 @@
+//- Markup to print out the LINKS of a guifi.net node.
+
+mixin links(data)
+  Folder(id="guifi-#{data.$.id}-links")
+    name= data.$.title
+    Snippet
+    
+    //- group links (first WDS, then AP/client)
+    - var links = {"ap/client": [], "wds": []};
+    each link in data.links
+      - links[link.type].push(link);
+    - links = links["wds"].concat(links["ap/client"]);
+    
+    //- the balloon will have a table with the links
+    description
+      | <![CDATA[
+      |   <h2>
+      |     Links of <a href="#guifi-#{data.$.id};flyto">#{data.$.title}</a><br/>
+      |     <small><a href="http://guifi.net/node/#{data.$.id}/view/links">See at guifi.net</a><small>
+      |   </h2>
+      
+      table
+        each link in links
+          - var dest = link.node;
+          //FIXME: test that classes are combined
+          tr.link(class=link.type)
+            td.type= link.type.toUpperCase()
+            td.distance <a href="#guifi-#{data.$.id}-#{dest.$.id};balloonFlyto">#{link.distance} km</a>
+            td.status= link.status
+            td.node <a href="#guifi-#{dest.$.id};flyto">#{dest.$.title}</a>
+      
+      | ]]>
+    
+    //- now, print the actual lines
+    each link in links
+      - var dest = link.node;
+      Placemark(id="guifi-#{data.$.id}-#{dest.$.id}")
+        name to #{dest.$.title}
+        Snippet
+        //- the balloon of the line will have the link's details
+        description.
+          <![CDATA[
+            <h2><a href="#guifi-#{data.$.id};flyto">#{data.$.title}</a> to
+                <a href="#guifi-#{dest.$.id};flyto">#{dest.$.title}</a></h2>
+            
+            <p class="link-details">
+              <strong>Type:</strong> #{link.type.toUpperCase()} </br>
+              <strong>Status:</strong> #{link.status} </br>
+              <strong>Distance:</strong> #{link.distance} km
+            </p>
+          ]]>
+        
+        //- the actual geometry
+        LineString
+          coordinates.
+            #{data.$.lon},#{data.$.lat},#{data.$.antenna_elevation}
+            #{dest.$.lon},#{dest.$.lat},#{dest.$.antenna_elevation}
+          altitudeMode relativeToGround
+        
+        //- the appearence of the line
+        Style
+          LineStyle
+            case link.type
+              when "wds"
+                color= api.col('33ff00')
+                width 3
+              when "ap/client"
+                color= api.col('ff0000')
+                width 1
+
