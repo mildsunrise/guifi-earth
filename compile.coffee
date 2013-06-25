@@ -1,4 +1,4 @@
-#!node_modules/.bin/coffee
+#!/usr/bin/env node_modules/.bin/coffee
 
 Q = require "q"
 fs = require "fs"
