@@ -4,6 +4,7 @@
 
 - screenshots, prebuilt files
 - fix "downloads" at README
+- move preprocessing step to Parsing
 
 ### Content
 
