@@ -7,9 +7,13 @@ Maps][google-maps] or any other KML-capable program. You can customize it
 easily, see the [Tweaking](#tweaking) section.
 
 To try it, you can download a standard, pre-built KML file from the
-[downloads page][downloads] and open it in Google Earth.
+[downloads page][downloads] and open it in Google Earth. You can also
+use it offline (but the links to the official site won't work, of course).
 
-//TODO: screenshots, fix download link
+//TODO: screenshots, prebuilt files
+- add icons (both world and link icons)
+- fix visibility check off only
+- add use recommendations
 
 
 ## Setting up
