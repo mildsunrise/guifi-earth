@@ -71,11 +71,25 @@ your own KMLs. Keep reading.
 
 Want to customize your KML a bit? No worries, it's simple and straightforward.
 
-The `model.jade` is the template which is used to produce the KML. It is
-intuitive to read and modify, but you may want to learn the basics of
-[KML][kml] and [Jade][jade] to do bigger things.
+The `model` folder contains the files which are used to produce the KML. It
+can be intimidating at first, and you should learn the basics of [KML][kml]
+and [Jade][jade] to do more things. There are four templates:
 
-Once you have modified the template, just call `compile.coffee` again. And if
+ * **root.jade**: It produces the "root" folder, the one which gets added when
+   you open the KML. You normally don't want to modify this.
+ * **zone.jade**: It produces every zone folder and sorts his contents (to put
+   supernodes first, and other nodes later). You normally don't want to modify
+   this.
+ * **node.jade**: It produces every node placemark. It styles that placemark
+   (icon, color, description) according to the node's properties.
+ * **links.jade**: It produces a folder, and puts lines representing links
+   inside of that folder.
+
+Take the appropiate one depending on what you want to customize, open it in
+the editor and play with it. There are some annotations to guide you (lines
+that start with `//` or `//-`).
+
+Once you have made some modifications, just call `compile.coffee` again. And if
 you made a nice change, I encourage you to contribute it so everyone can have
 it too. :)
 
