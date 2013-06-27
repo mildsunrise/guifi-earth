@@ -6,9 +6,9 @@ Markup Language][kml], for viewing in [Google Earth][google-earth], [Google
 Maps][google-maps] or any other KML-capable program. You can customize it
 easily, see the [Tweaking](#tweaking) section.
 
-To try it, you can download a standard, pre-built KML file from the
-[downloads page][downloads] and open it in Google Earth. You can also
-use it offline (but the links to the official site won't work, of course).
+To try it, you can download a standard, pre-built KML file from [here][dl-kml]
+and open it in Google Earth. You can also use it offline (but the links to the
+official site won't work, of course).
 
 **Google Earth screenshots**  
 Showing [`VILCastellRistol`](http://guifi.net/ca/node/38759) and its coverage:
@@ -33,9 +33,9 @@ This will install any dependencies for you.
 
 #### Parsing
 
-> You can download `data.pak` from the [downloads page][downloads] and
-> skip to [the next section](#converting). (there's no guarantee that
-> the data will be up-to-date, however)
+> You can download `data.pak` from [here][dl-pak] and skip to [the next
+> section](#converting). (there's no guarantee that the data will be
+> up-to-date, however)
 
 First, you need to download the following input data:
 
@@ -105,7 +105,8 @@ smaller than its respective XML files.
 
 
 
-[downloads]: http://asdfasdfasdfadf "Downloads of this project"
+[dl-kml]: https://raw.github.com/jmendeth/guifi-earth-builds/master/guifi.kmz "Pre-built, compressed KML file"
+[dl-pak]: https://raw.github.com/jmendeth/guifi-earth-builds/master/data.pak.lzma "Compressed data.pak archive"
 
 [kml]: https://developers.google.com/kml/documentation "KML documentation"
 [google-earth]: http://earth.google.com "Google Earth"
