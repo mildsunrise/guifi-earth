@@ -10,6 +10,13 @@ To try it, you can download a standard, pre-built KML file from the
 [downloads page][downloads] and open it in Google Earth. You can also
 use it offline (but the links to the official site won't work, of course).
 
+**Google Earth screenshots**  
+Showing [`VILCastellRistol`](http://guifi.net/ca/node/38759) and its coverage:
+[**Perspective view**](http://i.imgur.com/6hNzVkN.jpg)
+&nbsp;•&nbsp;
+[**Normal view**](http://i.imgur.com/LQCVsKv.jpg)
+
+
 
 ## Setting up
 
