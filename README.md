@@ -10,11 +10,19 @@ To try it, you can download a standard, pre-built KML file from [here][dl-kml]
 and open it in Google Earth. You can also use it offline (but the links to the
 official site won't work, of course).
 
-**Google Earth screenshots**  
-Showing [`VILCastellRistol`](http://guifi.net/ca/node/38759) and its coverage:
-[**Perspective view**](http://i.imgur.com/6hNzVkN.jpg)
-&nbsp;•&nbsp;
-[**Normal view**](http://i.imgur.com/LQCVsKv.jpg)
+###### Google Earth screenshots
+With [`VILCastellRistol`](http://guifi.net/node/38759) and its coverage:
+  [**Perspective view**](http://i.imgur.com/6hNzVkN.jpg)
+  &nbsp;•&nbsp;
+  [**Normal view**](http://i.imgur.com/LQCVsKv.jpg)  
+With western [Terrassa](http://guifi.net/Terrassa) and [`TRSATorrePalau`](http://guifi.net/node/21940) description:
+  [**Side view**](http://i.imgur.com/ClDcaqg.jpg)  
+With [`TRSAJll330`](http://guifi.net/node/38737) and its links:
+  [**Street view**](http://i.imgur.com/Ld1eX8Y.jpg)  
+With [`TRSAnordBonAire`](http://guifi.net/node/50109):
+  [**Street view**](http://i.imgur.com/ffdrk1k.jpg)
+  &nbsp;•&nbsp;
+  [**Surface view**](http://i.imgur.com/axf7eLc.jpg)
 
 
 
