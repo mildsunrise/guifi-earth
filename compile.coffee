@@ -28,7 +28,7 @@ compileView = (file) -> Q
 
 VIEW = "model/root.jade"
 DEBUG =  on
-PRETTY = on
+PRETTY = off
 
 
 
