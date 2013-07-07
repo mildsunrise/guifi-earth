@@ -53,6 +53,10 @@ First, you need to download the following input data:
   - GML export of the "World" zone, of the links:
     http://guifi.net/guifi/gml/3671/links
 
+> As of `v0.2.0`, you can dump individual zones other than World, allowing
+> you to quickly see your zone's changes with a partial KML. Just make
+> sure **the CNML and the GML are of the same zone**!
+
 Now you can parse those two files into an efficient MSGPack archive:
 
 ```bash
