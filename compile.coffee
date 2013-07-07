@@ -74,12 +74,12 @@ buildKml = (data) ->
   if nodes.cnml.network[0].zone.length != 1
     throw new Error "There should be exactly ONE zone."
   if nodes.cnml.network[0].node?
-    throw new Error "Everything should be inside the root zone."
+    throw new Error "Everything should be inside the dumped zone."
   
   # determine root hashes
   cnml = nodes.cnml
   network = cnml.network[0]
-  world = network.zone[0]
+  dumpedZone = network.zone[0]
   
   # index every node
   nodesHash = {}
@@ -91,7 +91,7 @@ buildKml = (data) ->
       for cnode in zone.node
         nodesHash[cnode.$.id] = cnode
         cnode.links = []
-  indexZone world
+  indexZone dumpedZone
   
   # index every link twice
   pushLink = (link, from, to) ->
@@ -116,7 +116,7 @@ buildKml = (data) ->
     # produce output
     console.error "Converting..."
     view cnml: cnml
-       , net: network, world: world
+       , net: network, dumpedZone: dumpedZone
        , api: earthApi
 
 

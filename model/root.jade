@@ -4,31 +4,27 @@
 !!! xml
 kml(xmlns="http://www.opengis.net/kml/2.2")
   
-  // The root zone, slightly different from
-  // the other zones. Note we do *not* show
-  // that within a Region.
-  
-  Folder#guifi-world
-    name= world.$.title
+  Folder(id="guifi-#{dumpedZone.$.id}")
+    name= dumpedZone.$.title
     Snippet
     description.
       <![CDATA[<p>
-        <a href="http://guifi.net/guifi_zones">guifi.net root zone</a>.
+        <a href="http://guifi.net/node/#{dumpedZone.$.id}">#{dumpedZone.$.title}</a>.
       </p>]]>
-      #{world._}
+      #{dumpedZone._}
+
+    Style
+      ListStyle
+        listItemType checkOffOnly //FIXME
+        ItemIcon: href world.png
     
-    styleUri #guifiWorldStyle
     visibility 0
     
     //- let the fun start!
     include zone
-    mixin dumpChildren(world)
+    mixin dumpChildren(dumpedZone)
   
 
-  Style#guifiWorldStyle
-    ListStyle
-      listItemType checkOffOnly //FIXME
-      ItemIcon: href world.png
   
   Style#guifiZoneStyle
     // just in case we wanna add something later
