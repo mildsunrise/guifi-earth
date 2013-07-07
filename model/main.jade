@@ -3,7 +3,21 @@
 
 !!! xml
 kml(xmlns="http://www.opengis.net/kml/2.2")
+
+  // Some shared styles
+
+  Style#guifiZoneStyle
+    // just in case we wanna add something later
   
+  Style#guifiZoneLinksStyle
+    // just in case we wanna add something later
+  
+  Style#guifiNodeLinksStyle
+    // just in case we wanna add something later
+
+
+  // The actual content
+
   Folder(id="guifi-#{dumpedZone.$.id}")
     name= dumpedZone.$.title
     Snippet
@@ -23,15 +37,4 @@ kml(xmlns="http://www.opengis.net/kml/2.2")
     //- let the fun start!
     include zone
     mixin dumpChildren(dumpedZone)
-  
-
-  
-  Style#guifiZoneStyle
-    // just in case we wanna add something later
-  
-  Style#guifiZoneLinksStyle
-    // just in case we wanna add something later
-  
-  Style#guifiNodeLinksStyle
-    // just in case we wanna add something later
 
