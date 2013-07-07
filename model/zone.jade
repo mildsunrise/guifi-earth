@@ -67,7 +67,7 @@ mixin dumpChildren(zoneData)
         <![CDATA[<p>
           Links for the <a href="#guifi-#{zoneData.$.id};balloon">#{zoneData.$.title}</a> zone.
         </p>]]>
-      styleUri #guifiLinksFolderStyle
+      styleUri #guifiZoneLinksStyle
       each name in supernames
         if supernodes[name].links
           mixin links(supernodes[name])
