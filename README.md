@@ -7,8 +7,9 @@ Maps][google-maps] or any other KML-capable program. You can customize it
 easily, see the [Tweaking](#tweaking) section.
 
 To try it, you can download a standard, pre-built KML file from [here][dl-kml]
-and open it in Google Earth. You can also use it offline (but the links to the
-official site won't work, of course).
+and open it in Google Earth. **Make sure to read some [use recommendations]
+[use-googleearth]!** You can also use it offline (but the links to the official
+site won't work, of course).
 
 ###### Google Earth screenshots
 With [`VILCastellRistol`](http://guifi.net/node/38759) and its coverage:
@@ -119,6 +120,7 @@ smaller than its respective XML files.
 
 [dl-kml]: https://raw.github.com/jmendeth/guifi-earth-builds/master/guifi.kmz "Pre-built, compressed KML file"
 [dl-pak]: https://raw.github.com/jmendeth/guifi-earth-builds/master/data.pak.lzma "Compressed data.pak archive"
+[use-googleearth]: https://github.com/jmendeth/guifi-earth/wiki/Use-in-Google-Earth "How to use in Google Earth"
 
 [kml]: https://developers.google.com/kml/documentation "KML documentation"
 [google-earth]: http://earth.google.com "Google Earth"
