@@ -75,8 +75,6 @@ buildKml = (data) ->
     throw new Error "There should be exactly ONE zone."
   if nodes.cnml.network[0].node?
     throw new Error "Everything should be inside the root zone."
-  if nodes.cnml.network[0].zone[0].$.title != "guifi.net World"
-    throw new Error "The CNML needs to be from the root zone."
   
   # determine root hashes
   cnml = nodes.cnml
