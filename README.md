@@ -49,7 +49,7 @@ This will install any dependencies for you.
 First, you need to download the following input data:
 
   - CNML export of the "World" zone, at the "Zones and Nodes" level:
-    http://guifi.net/guifi/cnml/3671/nodes
+    http://guifi.net/snpservices/data/guifi.cnml
   
   - GML export of the "World" zone, of the links:
     http://guifi.net/guifi/gml/3671/links
