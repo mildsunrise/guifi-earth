@@ -69,8 +69,8 @@ buildKml = (data) ->
   
   # validate input
   console.error "Preprocessing data..."
-  if nodes.cnml.class[0].$.network_description != "nodes"
-    throw new Error "The CNML should be at «node» level."
+  if nodes.cnml.class[0].$.network_description not in ["nodes", "detail"]
+    throw new Error "The CNML should be at «node» or «detail» level."
   if nodes.cnml.network[0].zone.length != 1
     throw new Error "There should be exactly ONE zone."
   if nodes.cnml.network[0].node?
