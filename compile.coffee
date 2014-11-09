@@ -11,8 +11,8 @@ argv = process.argv
 readFile = Q.denodeify fs.readFile
 writeFile = Q.denodeify fs.writeFile
 
-compileView = (file) -> Q
-  .fcall ->
+compileView = (file) ->
+  Q.fcall ->
     file = path.join __dirname, file
     readFile file, "utf8"
   .then (view) ->
@@ -34,8 +34,8 @@ PRETTY = off
 
 # The actual work
 
-parseData = (nodes, links) -> Q
-  .fcall ->
+parseData = (nodes, links) ->
+  Q.fcall ->
     console.error "Reading files..."
     [readFile(nodes, 'utf8'),
      readFile(links, 'utf8')]
@@ -50,8 +50,8 @@ parseData = (nodes, links) -> Q
     process.stdout.write data
   .done()
 
-useData = (data) -> Q
-  .fcall ->
+useData = (data) ->
+  Q.fcall ->
     console.error "Reading data..."
     readFile data
   .then (data) ->
